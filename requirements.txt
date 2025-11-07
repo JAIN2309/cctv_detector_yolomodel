@@ -1,2 +1,4 @@
 opencv-python
 moviepy
+ultralytics
+numpy
