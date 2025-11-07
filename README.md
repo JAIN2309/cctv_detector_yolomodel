@@ -10,15 +10,6 @@
 
 > 🔍 AI-powered surveillance system detecting desk absence and mobile usage in CCTV feeds using **YOLOv8n**. It saves privacy-protected snapshots and structured event logs for monitoring and analysis.
 
----
-
-## 🎥 Live Demo
-
-**(Suggestion: Record a short GIF of the detector running and place it here. This is the most important part of your README!)**
-
-``
-
-*A brief demo showing real-time detection of 'person' (present/absent) and 'cell phone' usage with blurred faces.*
 
 ---
 
