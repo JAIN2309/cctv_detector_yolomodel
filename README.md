@@ -68,8 +68,8 @@ cctv_detector/
 ├── utils.py             # Logging, face blurring, image utilities
 ├── roi.py               # Optional ROI (Region of Interest) handler
 ├── requirements.txt     # Python dependencies
-├── sample_test_video.mp4# Sample video for testing
-└── outputs/             # Generated event logs & snapshots
+├── person_in_video.mp4  # Sample video for testing
+└── events/              # Generated event logs & snapshots
     ├── events.csv
     ├── events.json
     ├── desk_empty_YYYY-MM-DD_HH-MM-SS.jpg
