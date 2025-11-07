@@ -193,7 +193,6 @@ This tool is designed with privacy in mind:
   <a href="https://www.linkedin.com/in/krishjain-dev/"><img alt="LinkedIn" src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white"></a>
   <a href="https://github.com/JAIN2309"><img alt="GitHub" src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white"></a>
 </p>
----
 
 ## 📝 License
 
