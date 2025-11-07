@@ -22,7 +22,7 @@ class CCTVDetector:
 
         # ✅ Load YOLOv8 model (downloads automatically if missing)
         print("🔄 Loading YOLOv8 model...")
-        self.model = YOLO("yolov8n.pt")  # Yolov8 fast model
+        self.model = YOLO("yolov8n.pt")  # YOLOv8 fast model
         print("✅ YOLOv8 model ready.")
 
     def run(self):
@@ -36,7 +36,17 @@ class CCTVDetector:
             if not ret:
                 break
 
+            # 🔍 Run YOLO detection
             results = self.model(frame, verbose=False)[0]
+
+            # 🎯 Draw bounding boxes before further logic
+            for box in results.boxes:
+                x1, y1, x2, y2 = map(int, box.xyxy[0])
+                cls_name = self.model.names[int(box.cls)]
+                conf = float(box.conf)
+                cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                cv2.putText(frame, f"{cls_name} {conf:.2f}", (x1, y1 - 10),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
             person_detected = False
             phone_detected = False
@@ -50,7 +60,7 @@ class CCTVDetector:
 
             now = time.time()
 
-            # Desk empty detection
+            # 🧠 Desk empty detection logic
             if person_detected:
                 self.last_person_time = now
                 self.desk_empty_logged = False
@@ -60,7 +70,7 @@ class CCTVDetector:
                     self.log_event(frame, "desk_empty", duration)
                     self.desk_empty_logged = True
 
-            # Mobile in hand detection
+            # 📱 Mobile in hand detection logic
             if phone_detected and not self.mobile_active:
                 self.mobile_active = True
                 self.mobile_start_time = now
@@ -68,16 +78,40 @@ class CCTVDetector:
             elif not phone_detected and self.mobile_active:
                 duration = now - self.mobile_start_time
                 self.mobile_active = False
-                self.log_event(frame, "mobile_in_hand_end", round(duration, 2))
+                self.log_event(frame, "mobile_not_in_hand", round(duration, 2))
+
+            # 👁️ Optional: show live detection window
+            cv2.imshow("YOLOv8 Detection", frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
 
         cap.release()
+        cv2.destroyAllWindows()
         self.save_log()
 
     def log_event(self, frame, label, duration):
         ts = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         out_path = os.path.join(self.outdir, f"{label}_{ts}.jpg")
+
+        # 🔍 Re-run YOLO on this frame to draw boxes before saving
+        results = self.model(frame, verbose=False)[0]
+
+        # 🎯 Draw bounding boxes and labels
+        for box in results.boxes:
+            x1, y1, x2, y2 = map(int, box.xyxy[0])
+            cls_name = self.model.names[int(box.cls)]
+            conf = float(box.conf)
+            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.putText(frame, f"{cls_name} {conf:.2f}", (x1, y1 - 10),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+
+        # 😷 Blur faces before saving final image
         frame = blur_faces(frame)
+
+        # 💾 Save the processed frame
         save_event_image(frame, out_path)
+
+        # 🧾 Log event details
         event = {"timestamp": ts, "label": label, "duration": duration}
         self.log.append(event)
         print(f"[EVENT] {label} @ {ts} (duration={duration}s)")
