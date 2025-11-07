@@ -6,63 +6,66 @@
 ![OpenCV](https://img.shields.io/badge/OpenCV-Enabled-red)
 ![Ultralytics](https://img.shields.io/badge/Powered%20by-Ultralytics-yellow)
 
-> 🔍 A **Python-based AI surveillance tool** that detects key events (desk absence & mobile usage) from CCTV feeds using the **YOLOv8** object detection model.  
-> Logs events with timestamps, durations, and privacy-blurred snapshots for secure monitoring and analysis.
+> 🔍 **AI-powered surveillance system** detecting desk absence and mobile usage in CCTV feeds using **YOLOv8n**, saving privacy-protected snapshots and structured logs for monitoring and analysis.
 
 ---
 
-## ✨ Features  
+## ✨ Key Features  
 
-✅ **Desk Empty Detection** – Detects and logs when a person has been absent from the camera view for a specified duration.  
-✅ **Mobile Phone Detection** – Identifies and tracks mobile phone usage events automatically.  
-✅ **Event Logging** – Stores all detected events in both `.csv` and `.json` with precise timestamps and durations.  
-✅ **Snapshot Archiving** – Saves an image for each event with **blurred faces** to preserve privacy.  
-✅ **Live Video Preview** – Displays real-time bounding boxes with object labels during processing.  
-✅ **Modular & Scalable** – Built with reusable modules for future AI/ML and cloud integrations.
+- **Desk Empty Detection** – Detect when a person is absent for a configurable duration.  
+- **Mobile Phone Detection** – Track mobile phone usage automatically.  
+- **Event Logging** – Logs in `.csv` and `.json` formats with timestamps and durations.  
+- **Privacy Protection** – Automatically blurs faces in snapshots.  
+- **Real-time Preview** – Shows live bounding boxes with object labels.  
+- **Modular & Scalable** – Designed for easy extension, including multi-camera support or cloud integration.  
 
 ---
 
 ## ⚙️ How It Works  
 
-The detector uses **Ultralytics YOLOv8n** to process video frames in real-time.  
-It continuously monitors for **"person"** and **"cell phone"** objects, applying custom logic to detect behavioral events.
+The system leverages **YOLOv8n** for real-time object detection on video frames. It tracks objects `"person"` and `"cell phone"` and applies event-triggering logic.
 
-### 🧠 Detection Logic Overview  
+### 🧠 Detection Logic  
 
-| Event Type | Trigger Condition | Action Taken |
-|-------------|------------------|---------------|
-| **Desk Empty** | No `person` detected beyond threshold | Logs `desk_empty` event with snapshot |
-| **Mobile In Hand** | `cell phone` detected | Logs `mobile_in_hand` event start |
-| **Mobile Not In Hand** | `cell phone` disappears | Logs `mobile_not_in_hand` event with duration |
+| Event Type | Trigger Condition | Action |
+|------------|-----------------|--------|
+| **Desk Empty** | No person detected for threshold time | Logs `desk_empty` with blurred snapshot |
+| **Mobile In Hand** | Cell phone detected | Logs `mobile_in_hand` event start |
+| **Mobile Not In Hand** | Cell phone disappears | Logs `mobile_not_in_hand` event with duration |
 
-### 🧩 Event Workflow  
+### 🧩 Workflow  
 
-1. **Frame Read** → Capture frame from camera or video file  
+1. **Capture Frame** → Read from CCTV feed or video file  
 2. **Object Detection** → YOLOv8 detects bounding boxes  
-3. **Event Trigger** → Logic determines state change  
-4. **Face Blur** → Automatically anonymizes faces in the frame  
-5. **Log & Save** → Saves structured metadata + event image  
+3. **Event Triggering** → Detect state changes  
+4. **Face Anonymization** → Blur faces using OpenCV  
+5. **Logging** → Save structured data + event snapshot  
 
 ---
 
-## 📁 Folder Structure  
+## 📁 Project Structure  
 
 ```bash
 cctv_detector/
 ├── main.py              # Core entry point
-├── detector.py          # YOLOv8 detection and event logic
-├── utils.py             # Utilities for logging & blurring
-├── roi.py               # Optional ROI handling
-run_detector.py          # Command-line runner
-requirements.txt         # Python dependencies
-sample_test_video.mp4    # Example video for testing
+├── run_detector.py      # CLI runner for videos or live feeds
+├── detector.py          # YOLOv8 detection & event logic
+├── utils.py             # Logging, face blurring, image utilities
+├── roi.py               # Optional ROI (Region of Interest) handler
+├── requirements.txt     # Python dependencies
+├── sample_test_video.mp4 # Sample video for testing
+├── outputs/             # Generated event logs & snapshots
+│   ├── events.csv
+│   ├── events.json
+│   ├── desk_empty_YYYY-MM-DD_HH-MM-SS.jpg
+│   └── mobile_in_hand_YYYY-MM-DD_HH-MM-SS.jpg
 
-🚀 Getting Started
-1️⃣ Clone the Repository
+🚀 Installation & Usage
+1️⃣ Clone the repository
 git clone https://github.com/<your-username>/cctv_event_detector.git
 cd cctv_event_detector
 
-2️⃣ Set Up Virtual Environment
+2️⃣ Set up virtual environment
 <details> <summary>🪟 Windows (PowerShell)</summary>
 python -m venv venv
 venv\Scripts\activate
@@ -72,36 +75,21 @@ python3 -m venv venv
 source venv/bin/activate
 
 </details>
-3️⃣ Install Dependencies
+3️⃣ Install dependencies
 pip install -r requirements.txt
 
-4️⃣ Run the Detector
+4️⃣ Run the detector
 python run_detector.py --video sample_test_video.mp4
 
 
-💡 Optional arguments:
---empty-threshold → Set desk empty duration threshold (seconds)
---output-dir → Specify custom output folder
+Optional arguments:
 
-🧠 Tech Stack
-Component	Technology
-Language	Python 3.8+
-AI Model	YOLOv8n (Ultralytics)
-Libraries	OpenCV, NumPy, Pandas, Ultralytics
-Outputs	CSV, JSON, JPG
-📊 Example Outputs
+--empty-threshold <seconds> → Set desk absence duration threshold
 
-Generated Files:
+--output-dir <folder> → Custom folder for logs and snapshots
 
-outputs/
-├── events.csv
-├── events.json
-├── desk_empty_2025-11-07_10-22-33.jpg
-├── mobile_in_hand_2025-11-07_10-25-14.jpg
-
-
-Sample Log Entry (JSON):
-
+🧾 Sample Output
+JSON Log
 {
     "event_type": "mobile_in_hand",
     "timestamp": "2025-11-07_10-25-14",
@@ -109,32 +97,37 @@ Sample Log Entry (JSON):
     "image_path": "outputs/mobile_in_hand_2025-11-07_10-25-14.jpg"
 }
 
+CSV Log
+event_type,timestamp,duration_sec,image_path
+desk_empty,2025-11-07_10-22-33,45.2,outputs/desk_empty_2025-11-07_10-22-33.jpg
+mobile_in_hand,2025-11-07_10-25-14,32.7,outputs/mobile_in_hand_2025-11-07_10-25-14.jpg
+
 🔐 Privacy Protection
 
-✅ All saved frames undergo automatic face blurring using OpenCV.
+All saved frames have faces automatically blurred.
 
-✅ No data is uploaded or shared externally.
+No data is uploaded externally.
 
-✅ Local logs can be deleted or anonymized anytime.
+Logs can be deleted or anonymized locally anytime.
 
 🧭 Future Enhancements
 
- Multi-camera concurrent monitoring
+Multi-camera simultaneous monitoring
 
- Flask/Django-based live web dashboard
+Web dashboard (Flask/Django) with live analytics
 
- Email/SMS event notifications
+Event notifications via Email/SMS
 
- Integration with cloud storage (AWS/GCP)
+Cloud storage integration (AWS/GCP)
 
- Face recognition-based access control
+Face recognition-based access control
 
-🧾 License
-
-This project is licensed under the MIT License.
-See the LICENSE
- file for more information.
-
+🧰 Tech Stack
+Component	Technology
+Language	Python 3.8+
+AI Model	YOLOv8n (Ultralytics)
+Libraries	OpenCV, NumPy, Pandas, Ultralytics
+Outputs	CSV, JSON, JPG
 👨‍💻 Author
 
 Krish Jain
@@ -142,3 +135,8 @@ Krish Jain
 💼 Full Stack & Computer Vision Developer
 🌐 GitHub
  • LinkedIn
+
+📝 License
+
+This project is licensed under MIT License. See LICENSE
+ for details.
