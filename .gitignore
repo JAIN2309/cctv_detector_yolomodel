@@ -1,0 +1,62 @@
+# ============================
+# 🧠 Python Project Ignore List
+# ============================
+
+# --- Virtual Environments ---
+venv/
+env/
+.venv/
+ENV/
+
+# --- Python cache and build ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+build/
+dist/
+.eggs/
+*.manifest
+*.spec
+
+# --- IDE & Editor Files ---
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# --- Logs & Temporary Files ---
+*.log
+*.tmp
+*.bak
+*.swp
+*.DS_Store
+
+# --- Media & Outputs ---
+*.mp4
+*.avi
+*.mov
+*.jpg
+*.png
+*.jpeg
+
+# --- App-generated event files ---
+events/
+*.json
+*.csv
+
+# --- Model weights ---
+*.pt
+*.onnx
+
+# --- OS-specific ---
+Thumbs.db
+Desktop.ini
+
+# --- Other ---
+*.zip
+*.tar.gz
+*.rar
