@@ -1,10 +1,10 @@
 # 🚨 CCTV Event Detector using YOLOv8  
 
-![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![Python](https://img.shields.io/badge/Python-3.8+-blue)
 ![YOLOv8](https://img.shields.io/badge/Model-YOLOv8n-orange)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green)
 ![OpenCV](https://img.shields.io/badge/OpenCV-Enabled-red)
-![Ultralytics](https://img.shields.io/badge/Powered_by-Ultralytics-yellow)
+![Ultralytics](https://img.shields.io/badge/Powered%20by-Ultralytics-yellow)
 
 > 🔍 A **Python-based AI surveillance tool** that detects key events (desk absence & mobile usage) from CCTV feeds using the **YOLOv8** object detection model.  
 > Logs events with timestamps, durations, and privacy-blurred snapshots for secure monitoring and analysis.
@@ -18,7 +18,6 @@
 ✅ **Event Logging** – Stores all detected events in both `.csv` and `.json` with precise timestamps and durations.  
 ✅ **Snapshot Archiving** – Saves an image for each event with **blurred faces** to preserve privacy.  
 ✅ **Live Video Preview** – Displays real-time bounding boxes with object labels during processing.  
-✅ **Configurable Thresholds** – Adjustable parameters for desk-empty duration and detection sensitivity.  
 ✅ **Modular & Scalable** – Built with reusable modules for future AI/ML and cloud integrations.
 
 ---
