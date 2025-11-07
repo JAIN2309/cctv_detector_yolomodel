@@ -125,7 +125,7 @@ You can run the detector on a pre-recorded video file, a live webcam, or an RTSP
 ### Run on a Video File
 
 ```bash
-python run_detector.py --source sample_test_video.mp4
+python run_detector.py --video sample_test_video.mp4
 ```
 
 ### Run on a Live Webcam
