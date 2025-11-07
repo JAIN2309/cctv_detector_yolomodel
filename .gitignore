@@ -36,7 +36,7 @@ dist/
 *.DS_Store
 
 # --- Media & Outputs ---
-*.mp4
+
 *.avi
 *.mov
 *.jpg
