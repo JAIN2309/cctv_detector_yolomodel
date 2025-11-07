@@ -128,20 +128,6 @@ You can run the detector on a pre-recorded video file, a live webcam, or an RTSP
 python run_detector.py --video sample_test_video.mp4
 ```
 
-### Run on a Live Webcam
-
-Use `0` as the source for your default webcam.
-
-```bash
-python run_detector.py --source 0
-```
-
-### Run on a CCTV (RTSP) Stream
-
-```bash
-python run_detector.py --source "rtsp://user:pass@192.168.1.101:554/stream"
-```
-
 ### ⚙️ Configuration (Command-Line Arguments)
 
 You can customize the detector's behavior using these optional arguments:
