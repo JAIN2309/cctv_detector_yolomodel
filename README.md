@@ -1,4 +1,3 @@
-Ah! I understand now — you want **one complete, ready-to-use `README.md` file**, without fragmented sections or extra separations, fully formatted and perfectly aligned. I will rewrite it in a **single, cohesive markdown file**, ready to save and use directly in your GitHub repo. Here's the complete version:
 
 ````markdown
 # 🚨 CCTV Event Detector using YOLOv8  
@@ -168,7 +167,7 @@ mobile_in_hand,2025-11-07_10-25-14,32.7,outputs/mobile_in_hand_2025-11-07_10-25-
 **Krish Jain**
 🎓 L.J. Institute of Computer Applications
 💼 Full Stack & Computer Vision Developer
-🌐 [GitHub]([https://github.com/](https://github.com/JAIN2309)) • [LinkedIn]([https://www.linkedin.com/in/](https://www.linkedin.com/in/krishjain-dev/))
+🌐 [GitHub](https://github.com/JAIN2309) • [LinkedIn](https://www.linkedin.com/in/krishjain-dev/)
 
 ---
 
