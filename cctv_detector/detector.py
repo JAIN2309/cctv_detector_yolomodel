@@ -67,18 +67,18 @@ class CCTVDetector:
             else:
                 if now - self.last_person_time > self.empty_threshold and not self.desk_empty_logged:
                     duration = int(now - self.last_person_time)
-                    self.log_event(frame, "desk_empty", duration)
+                    self.log_event(frame, "desk_empty", duration, results)
                     self.desk_empty_logged = True
 
             # 📱 Mobile in hand detection logic
             if phone_detected and not self.mobile_active:
                 self.mobile_active = True
                 self.mobile_start_time = now
-                self.log_event(frame, "mobile_in_hand", 0)
+                self.log_event(frame, "mobile_in_hand", 0, results)
             elif not phone_detected and self.mobile_active:
                 duration = now - self.mobile_start_time
                 self.mobile_active = False
-                self.log_event(frame, "mobile_not_in_hand", round(duration, 2))
+                self.log_event(frame, "mobile_not_in_hand", round(duration, 2), results)
 
             # 👁️ Optional: show live detection window
             cv2.imshow("YOLOv8 Detection", frame)
@@ -89,12 +89,9 @@ class CCTVDetector:
         cv2.destroyAllWindows()
         self.save_log()
 
-    def log_event(self, frame, label, duration):
+    def log_event(self, frame, label, duration, results):
         ts = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         out_path = os.path.join(self.outdir, f"{label}_{ts}.jpg")
-
-        # 🔍 Re-run YOLO on this frame to draw boxes before saving
-        results = self.model(frame, verbose=False)[0]
 
         # 🎯 Draw bounding boxes and labels
         for box in results.boxes:

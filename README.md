@@ -14,5 +14,5 @@ sample_test_video.mp4
 
 ## How to Run
 ```
-python run_detector.py --video sample_test_video.mp4 --roi 100 100 200 100 --empty-threshold 10
+python run_detector.py --video sample_test_video.mp4 
 ```
